@@ -2,7 +2,7 @@
 cloudflare 一键 ddns 脚本 (大陆可用)  
 下载`cf-v4-ddns.sh`编辑一下加到crontab里就完事了  
 ```
-sudo wget https://raw.githubusercontent.com/zanjie1999/cloudflare-api-v4-ddns/master/cf-v4-ddns.sh -O /usr/local/bin/cf-ddns.sh
+sudo wget https://raw.githubusercontent.com/xkatld/cloudflare-api-v4-ddns/master/cf-v4-ddns.sh -O /usr/local/bin/cf-ddns.sh
 sudo chmod +x /usr/local/bin/cf-ddns.sh
 sudo nano /usr/local/bin/cf-ddns.sh
 ```  
