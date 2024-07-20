@@ -2,15 +2,10 @@
 set -euo pipefail
 
 # 定义默认变量
-# 账号API KEY
 CFAPI_KEY=""
-# 账号邮箱
 CFAPI_EMAIL=""
-# 需要更新的主机名，例如：homeserver.example.com
 CFZONE_NAME=""
-# 域名区域ID
 CFRECORD_NAME=""
-# DNS记录类型，A为IPv4，AAAA为IPv6
 CFRECORD_TYPE="A"
 CFTTL=120
 FORCE=false
