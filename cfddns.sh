@@ -7,12 +7,12 @@ CFAPI_EMAIL=""
 CFZONE_NAME=""
 CFRECORD_NAME=""
 CFRECORD_TYPE="A"
-CFPROXIED=false
 CFTTL=120
 FORCE=false
 CFFILE_PATH="$HOME/.cf"
 WANIPSITE="http://v4.ipv6-test.com/api/myip.php"
 NOW_DATE_TIME=$(date "+%Y-%m-%d %H:%M:%S")
+CFPROXIED=false  # 新增: Cloudflare代理设置
 
 # 函数：日志输出
 log() {
@@ -35,7 +35,7 @@ while getopts ":k:e:h:z:t:f:p:x:" opts; do
         t) CFRECORD_TYPE=${OPTARG} ;;
         f) FORCE=${OPTARG} ;;
         p) CFFILE_PATH=${OPTARG} ;;
-        x) CFPROXIED=${OPTARG} ;;
+        x) CFPROXIED=${OPTARG} ;;  # 新增: 代理参数
         :) error_exit "选项 -$OPTARG 需要参数。" ;;
         \?) error_exit "无效选项: -$OPTARG" ;;
     esac
@@ -99,7 +99,7 @@ fi
 
 log "正在更新DNS记录 $CFRECORD_NAME 到 $WAN_IP"
 
-# 发送更新请求到Cloudflare API
+# 发送更新请求到Cloudflare API，包含代理设置
 RESPONSE=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$CFZONE_ID/dns_records/$CFRECORD_ID" \
   -H "X-Auth-Email: $CFAPI_EMAIL" \
   -H "X-Auth-Key: $CFAPI_KEY" \
