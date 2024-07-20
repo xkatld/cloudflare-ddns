@@ -15,5 +15,5 @@ vi /usr/local/bin/cfddns.sh
 ```
 也可以通过自定义参数命令运行
 ```shell
-./usr/local/bin/cfddns.sh -k <apikey> -e <邮箱> -z <域名> -h <二级域名> -t A
+/usr/local/bin/cfddns.sh -k <apikey> -e <邮箱> -z <域名> -h <二级域名> -t A
 ```
