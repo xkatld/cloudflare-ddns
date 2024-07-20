@@ -17,3 +17,7 @@ vi /usr/local/bin/cfddns.sh
 ```shell
 /usr/local/bin/cfddns.sh -k <apikey> -e <邮箱> -z <域名> -h <二级域名> -t A
 ```
+出现缓存错误可以通过下面命令清理缓存
+```shell
+rm -rf ~/.cf/
+```
