@@ -7,6 +7,7 @@ CFAPI_EMAIL=""
 CFZONE_NAME=""
 CFRECORD_NAME=""
 CFRECORD_TYPE="A"
+CFPROXIED=false
 CFTTL=120
 FORCE=false
 CFFILE_PATH="$HOME/.cf"
@@ -25,7 +26,7 @@ error_exit() {
 }
 
 # 解析命令行参数
-while getopts ":k:e:h:z:t:f:p:" opts; do
+while getopts ":k:e:h:z:t:f:p:x:" opts; do
     case ${opts} in
         k) CFAPI_KEY=${OPTARG} ;;
         e) CFAPI_EMAIL=${OPTARG} ;;
@@ -34,6 +35,7 @@ while getopts ":k:e:h:z:t:f:p:" opts; do
         t) CFRECORD_TYPE=${OPTARG} ;;
         f) FORCE=${OPTARG} ;;
         p) CFFILE_PATH=${OPTARG} ;;
+        x) CFPROXIED=${OPTARG} ;;
         :) error_exit "选项 -$OPTARG 需要参数。" ;;
         \?) error_exit "无效选项: -$OPTARG" ;;
     esac
@@ -102,11 +104,11 @@ RESPONSE=$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/$CFZONE_ID
   -H "X-Auth-Email: $CFAPI_EMAIL" \
   -H "X-Auth-Key: $CFAPI_KEY" \
   -H "Content-Type: application/json" \
-  --data "{\"type\":\"$CFRECORD_TYPE\",\"name\":\"$CFRECORD_NAME\",\"content\":\"$WAN_IP\",\"ttl\":$CFTTL}")
+  --data "{\"type\":\"$CFRECORD_TYPE\",\"name\":\"$CFRECORD_NAME\",\"content\":\"$WAN_IP\",\"ttl\":$CFTTL,\"proxied\":$CFPROXIED}")
 
 # 检查更新是否成功
 if [[ "$(echo "$RESPONSE" | jq -r '.success')" == "true" ]]; then
-    log "DNS记录更新成功！"
+    log "DNS记录更新成功！代理状态: $CFPROXIED"
     echo "$WAN_IP" > "$WAN_IP_FILE"
 else
     log "DNS记录更新失败"
